@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#E64A19</color>          <!-- Naranja rojizo principal -->
+    <color name="primary_variant">#D84315</color>  <!-- Tono más oscuro -->
+    <color name="secondary">#FF7043</color>        <!-- Naranja claro de acento -->
+    <color name="background">#F8F9FA</color>       <!-- Fondo gris tenue -->
+    <color name="surface">#FFFFFF</color>          <!-- Blanco tarjetas -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="danger">#D32F2F</color>           <!-- Rojo para alertas/salir -->
+</resources>
