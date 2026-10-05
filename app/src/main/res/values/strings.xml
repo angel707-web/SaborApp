@@ -21,4 +21,43 @@
     <string name="pantalla_vacia_mesas">Módulo de Mesas (Sprint 2)</string>
     <string name="pantalla_vacia_pedidos">Módulo de Pedidos (Sprint 3)</string>
     <string name="pantalla_vacia_reportes">Módulo de Reportes (Sprint 4)</string>
+
+    <!-- Sprint 2: Platos -->
+    <string name="titulo_nuevo_plato">Nuevo Plato</string>
+    <string name="label_nombre_plato">Nombre del plato</string>
+    <string name="label_categoria">Categoría</string>
+    <string name="label_precio">Precio (S/)</string>
+    <string name="label_disponible">Disponible para venta</string>
+    <string name="btn_guardar">Guardar</string>
+    <string name="err_nombre_requerido">El nombre es requerido</string>
+    <string name="err_precio_requerido">El precio es requerido</string>
+    <string name="err_precio_invalido">Precio inválido</string>
+    <string name="msg_plato_guardado">Plato guardado con éxito</string>
+    <string name="platos_lista_vacia">No hay platos registrados aún.\nPulsa «+» para registrar uno.</string>
+    <string name="estado_disponible">Disponible</string>
+    <string name="estado_no_disponible">No disponible</string>
+
+    <!-- Sprint 2: Mesas -->
+    <string name="titulo_nueva_mesa">Nueva Mesa</string>
+    <string name="label_numero_mesa">Número de mesa</string>
+    <string name="label_capacidad">Capacidad (1 a 12 personas)</string>
+    <string name="err_numero_mesa_requerido">Ingrese el número de mesa</string>
+    <string name="err_numero_mesa_invalido">Número de mesa inválido</string>
+    <string name="err_mesa_ya_existe">La mesa ya existe</string>
+    <string name="err_capacidad_invalida">Capacidad inválida</string>
+    <string name="msg_mesa_guardada">Mesa guardada con éxito</string>
+    <string name="mesas_lista_vacia">No hay mesas registradas aún.\nPulsa «+» para registrar una.</string>
+    <string name="estado_libre">LIBRE</string>
+    <string name="estado_ocupada">OCUPADA</string>
+    <string name="formato_mesa">Mesa %d</string>
+    <string name="formato_capacidad">Capacidad: %d personas</string>
+    <string name="formato_precio">S/ %.2f</string>
+
+    <!-- Categorías de platos -->
+    <string-array name="categorias_platos">
+        <item>Entradas</item>
+        <item>Fondos</item>
+        <item>Bebidas</item>
+        <item>Postres</item>
+    </string-array>
 </resources>

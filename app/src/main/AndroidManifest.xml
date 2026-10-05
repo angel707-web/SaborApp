@@ -37,6 +37,14 @@
             android:name=".ReportesActivity"
             android:exported="false" />
         <activity
+            android:name=".PlatoFormActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".MesaFormActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
     </application>

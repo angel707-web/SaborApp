@@ -37,21 +37,17 @@ class LoginActivity : AppCompatActivity() {
 
             if (!isValid) return@setOnClickListener
 
-            // CA2 y CA3: Validación mock de credenciales para Sprint 1
-            if (user == "admin" && pass == "1234") {
+            // HU-04 (Sprint 2): Validación real con SQLite parametrizada
+            val dbHelper = com.senati.saborapp.data.DBHelper(this)
+            val usuarioEncontrado = dbHelper.validarUsuario(user, pass)
+
+            if (usuarioEncontrado != null) {
                 val intent = Intent(this, MenuActivity::class.java).apply {
-                    putExtra("EXTRA_USUARIO", "admin")
-                    putExtra("EXTRA_ROL", "ADMIN")
+                    putExtra("EXTRA_USUARIO", usuarioEncontrado.usuario)
+                    putExtra("EXTRA_ROL", usuarioEncontrado.rol)
                 }
                 startActivity(intent)
-                finish() // CA2: Cierra login para no volver atrás
-            } else if (user == "mozo" && pass == "1234") {
-                val intent = Intent(this, MenuActivity::class.java).apply {
-                    putExtra("EXTRA_USUARIO", "mozo")
-                    putExtra("EXTRA_ROL", "MOZO")
-                }
-                startActivity(intent)
-                finish()
+                finish() // Cierra login para no volver atrás
             } else {
                 Toast.makeText(this, getString(R.string.err_credenciales_invalidas), Toast.LENGTH_SHORT).show()
             }
