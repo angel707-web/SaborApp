@@ -1,5 +1,6 @@
 package com.senati.saborapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -47,30 +48,39 @@ class CuentaActivity : AppCompatActivity() {
 
         cargarCuenta()
 
+        // HU-09: Cerrar cuenta
         binding.btnCerrarCuenta.setOnClickListener {
             confirmarCerrarCuenta()
+        }
+
+        // HU-11 (CA1, CA2, CA3): Compartir cuenta por WhatsApp u otra app
+        binding.btnCompartirCuenta.setOnClickListener {
+            compartirCuenta()
         }
     }
 
     private fun cargarCuenta() {
         if (idMesa <= 0) {
             binding.btnCerrarCuenta.isEnabled = false
+            binding.btnCompartirCuenta.isEnabled = false
             return
         }
 
         pedidoActivo = pedidoDao.obtenerPedidoActivoPorMesa(idMesa)
 
-        // HU-09 (CA3): Si la mesa está LIBRE o sin pedido, botón deshabilitado
+        // HU-09 (CA3): Si la mesa está LIBRE o sin pedido, botones deshabilitados
         if (pedidoActivo == null) {
             binding.tvFechaPedido.text = ""
             binding.tvTotalCuenta.text = getString(R.string.formato_precio, 0.0)
             binding.btnCerrarCuenta.isEnabled = false
+            binding.btnCompartirCuenta.isEnabled = false
             binding.tvCuentaVacia.visibility = View.VISIBLE
             binding.rvDetallesCuenta.visibility = View.GONE
             adapter.submitList(emptyList())
         } else {
             // HU-09 (CA1): Mostrar platos, cantidades, subtotales y total
             binding.btnCerrarCuenta.isEnabled = true
+            binding.btnCompartirCuenta.isEnabled = true
             binding.tvCuentaVacia.visibility = View.GONE
             binding.rvDetallesCuenta.visibility = View.VISIBLE
 
@@ -80,6 +90,42 @@ class CuentaActivity : AppCompatActivity() {
 
             val total = detalles.sumOf { it.subtotal }
             binding.tvTotalCuenta.text = getString(R.string.formato_precio, total)
+        }
+    }
+
+    /**
+     * HU-11: Arma el texto detallado de la cuenta y lo comparte mediante Intent.createChooser
+     */
+    private fun compartirCuenta() {
+        val pedido = pedidoActivo ?: return
+        val detalles = pedidoDao.obtenerDetallesPorPedido(pedido.id)
+
+        val sb = StringBuilder()
+        sb.append("🍗 *Pollería El Buen Sabor* 🍗\n")
+        sb.append("━━━━━━━━━━━━━━━━━━━━\n")
+        sb.append("🍽️ *Cuenta: Mesa $numeroMesa*\n")
+        sb.append("📅 Fecha: ${pedido.fecha}\n")
+        sb.append("━━━━━━━━━━━━━━━━━━━━\n")
+        sb.append("*Detalle del consumo:*\n")
+
+        for (item in detalles) {
+            sb.append("• ${item.cantidad}x ${item.nombrePlato} - ${getString(R.string.formato_precio, item.subtotal)}\n")
+        }
+
+        sb.append("━━━━━━━━━━━━━━━━━━━━\n")
+        sb.append("💵 *TOTAL: ${getString(R.string.formato_precio, pedido.total)}*\n")
+        sb.append("━━━━━━━━━━━━━━━━━━━━\n")
+        sb.append("¡Gracias por su preferencia!\n")
+
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, sb.toString())
+        }
+
+        try {
+            startActivity(Intent.createChooser(intent, getString(R.string.chooser_compartir_cuenta)))
+        } catch (e: Exception) {
+            Toast.makeText(this, "No se encontró aplicación para compartir", Toast.LENGTH_SHORT).show()
         }
     }
 

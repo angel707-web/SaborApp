@@ -120,6 +120,20 @@
                     tools:text="S/ 85.00" />
             </LinearLayout>
 
+            <!-- Botón Compartir Cuenta (WhatsApp) (HU-11) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCompartirCuenta"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/btn_compartir_cuenta"
+                android:textColor="@color/primary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/primary" />
+
             <!-- Botón Cerrar cuenta (deshabilitado si mesa está libre) -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCerrarCuenta"

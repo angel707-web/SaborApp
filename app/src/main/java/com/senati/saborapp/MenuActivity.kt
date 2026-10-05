@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.senati.saborapp.data.SessionManager
 import com.senati.saborapp.databinding.ActivityMenuBinding
-import kotlin.jvm.java
 
 class MenuActivity : AppCompatActivity() {
 
@@ -28,7 +28,7 @@ class MenuActivity : AppCompatActivity() {
             binding.cardReportes.visibility = View.GONE
         }
 
-        // CA2: Navegación hacia cada pantalla (stubs)
+        // Navegación hacia cada pantalla
         binding.cardPlatos.setOnClickListener {
             startActivity(Intent(this, PlatosActivity::class.java))
         }
@@ -42,8 +42,11 @@ class MenuActivity : AppCompatActivity() {
             startActivity(Intent(this, ReportesActivity::class.java))
         }
 
-        // CA3: Regresar al login
+        // HU-12 (CA2): Borrar sesión y regresar al login
         binding.btnSalir.setOnClickListener {
+            val sessionManager = SessionManager(this)
+            sessionManager.cerrarSesion()
+
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)

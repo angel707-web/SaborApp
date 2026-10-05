@@ -18,8 +18,18 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("${rootDir}/saborapp.jks")
+            storePassword = "saborapp1234"
+            keyAlias = "saborapp"
+            keyPassword = "saborapp1234"
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             optimization {
                 enable = false
             }
