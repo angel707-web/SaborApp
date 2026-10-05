@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.senati.saborapp.adapter.PlatoAdapter
 import com.senati.saborapp.dao.PlatoDao
@@ -29,10 +30,21 @@ class PlatosActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // Configurar RecyclerView
-        adapter = PlatoAdapter()
+        // Configurar RecyclerView con callback de click (HU-07 CA1)
+        adapter = PlatoAdapter { plato ->
+            val intent = Intent(this, PlatoFormActivity::class.java).apply {
+                putExtra("EXTRA_ID_PLATO", plato.id)
+            }
+            startActivity(intent)
+        }
         binding.rvPlatos.layoutManager = LinearLayoutManager(this)
         binding.rvPlatos.adapter = adapter
+
+        // HU-07 (CA3): Buscador en tiempo real con doAfterTextChanged
+        binding.etBuscar.doAfterTextChanged { editable ->
+            val filtro = editable?.toString()?.trim().orEmpty()
+            cargarPlatos(filtro)
+        }
 
         // FAB para abrir formulario de nuevo plato
         binding.fabNuevoPlato.setOnClickListener {
@@ -42,11 +54,12 @@ class PlatosActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        cargarPlatos()
+        val filtroActual = binding.etBuscar.text?.toString()?.trim().orEmpty()
+        cargarPlatos(filtroActual)
     }
 
-    private fun cargarPlatos() {
-        val lista = platoDao.listar()
+    private fun cargarPlatos(filtro: String = "") {
+        val lista = platoDao.listar(filtro)
         adapter.submitList(lista)
 
         if (lista.isEmpty()) {

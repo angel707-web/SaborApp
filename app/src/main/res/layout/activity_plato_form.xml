@@ -113,7 +113,7 @@
                 android:textColor="@color/text_primary"
                 android:textSize="15sp" />
 
-            <!-- Botón Guardar -->
+            <!-- Botón Guardar / Actualizar -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGuardarPlato"
                 android:layout_width="match_parent"
@@ -124,6 +124,21 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:cornerRadius="12dp" />
+
+            <!-- Botón Eliminar (solo visible en modo edición) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEliminarPlato"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/btn_eliminar"
+                android:textColor="@color/danger"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/danger" />
 
         </LinearLayout>
     </ScrollView>

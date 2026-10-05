@@ -60,4 +60,40 @@
         <item>Bebidas</item>
         <item>Postres</item>
     </string-array>
+
+    <!-- Sprint 3: HU-07 Editar, eliminar y buscar platos -->
+    <string name="titulo_editar_plato">Editar Plato</string>
+    <string name="btn_actualizar">Actualizar</string>
+    <string name="btn_eliminar">Eliminar</string>
+    <string name="dialog_titulo_eliminar_plato">Eliminar plato</string>
+    <string name="dialog_mensaje_eliminar_plato">¿Está seguro de que desea eliminar este plato?</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="btn_confirmar">Confirmar</string>
+    <string name="err_plato_con_pedidos">No se puede eliminar: tiene pedidos</string>
+    <string name="msg_plato_actualizado">Plato actualizado con éxito</string>
+    <string name="msg_plato_eliminado">Plato eliminado con éxito</string>
+    <string name="hint_buscar_plato">Buscar plato por nombre...</string>
+
+    <!-- Sprint 3: HU-08 Tomar pedido por mesa -->
+    <string name="titulo_tomar_pedido">Tomar Pedido</string>
+    <string name="seleccione_mesa">1. Seleccione una mesa</string>
+    <string name="mesa_seleccionada">Mesa %1$d (%2$s)</string>
+    <string name="seleccione_plato">Plato a agregar</string>
+    <string name="label_cantidad">Cantidad</string>
+    <string name="btn_agregar_al_pedido">Agregar al Pedido</string>
+    <string name="btn_ver_cuenta">Ver Cuenta</string>
+    <string name="btn_cerrar_cuenta">Cerrar Cuenta</string>
+    <string name="total_cuenta">Total: S/ %.2f</string>
+    <string name="pedido_vacio">Esta mesa aún no tiene platos agregados.</string>
+    <string name="msg_plato_agregado">Plato agregado al pedido</string>
+    <string name="err_seleccione_plato">Seleccione un plato disponible</string>
+    <string name="err_cantidad_invalida">La cantidad debe ser mayor a 0</string>
+    <string name="pedido_activo_header">Pedido Activo - %s</string>
+
+    <!-- Sprint 3: HU-09 Cerrar la cuenta de una mesa -->
+    <string name="titulo_cuenta">Cuenta - Mesa %d</string>
+    <string name="dialog_titulo_cerrar_cuenta">Cerrar cuenta</string>
+    <string name="dialog_mensaje_cerrar_cuenta">¿Desea cerrar la cuenta de la mesa %1$d por un total de S/ %2$.2f?</string>
+    <string name="msg_cuenta_cerrada">Cuenta cerrada y mesa liberada con éxito</string>
+    <string name="cuenta_mesa_libre">La mesa está libre (no tiene pedidos abiertos)</string>
 </resources>

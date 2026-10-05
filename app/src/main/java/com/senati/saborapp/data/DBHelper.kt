@@ -10,7 +10,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
 
     companion object {
         const val DB_NAME = "saborapp.db"
-        const val DB_VERSION = 1
+        const val DB_VERSION = 2
 
         // Tabla usuario
         const val TABLA_USUARIO = "usuario"
@@ -33,6 +33,23 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         const val COL_MESA_NUMERO = "numero"
         const val COL_MESA_CAPACIDAD = "capacidad"
         const val COL_MESA_ESTADO = "estado"
+
+        // Tabla pedido (Sprint 3)
+        const val TABLA_PEDIDO = "pedido"
+        const val COL_PEDIDO_ID = "id"
+        const val COL_PEDIDO_ID_MESA = "id_mesa"
+        const val COL_PEDIDO_FECHA = "fecha"
+        const val COL_PEDIDO_ESTADO = "estado" // "ABIERTO" / "CERRADO"
+        const val COL_PEDIDO_TOTAL = "total"
+
+        // Tabla detalle_pedido (Sprint 3)
+        const val TABLA_DETALLE = "detalle_pedido"
+        const val COL_DETALLE_ID = "id"
+        const val COL_DETALLE_ID_PEDIDO = "id_pedido"
+        const val COL_DETALLE_ID_PLATO = "id_plato"
+        const val COL_DETALLE_CANTIDAD = "cantidad"
+        const val COL_DETALLE_PRECIO_UNIT = "precio_unit"
+        const val COL_DETALLE_SUBTOTAL = "subtotal"
     }
 
     override fun onConfigure(db: SQLiteDatabase) {
@@ -89,10 +106,43 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
             )
         """.trimIndent()
         db.execSQL(sqlMesa)
+
+        // 4. Crear tabla pedido (Sprint 3)
+        crearTablasSprint3(db)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // Reservado para Sprint 3 (pedidos y detalle_pedido)
+        if (oldVersion < 2) {
+            crearTablasSprint3(db)
+        }
+    }
+
+    private fun crearTablasSprint3(db: SQLiteDatabase) {
+        val sqlPedido = """
+            CREATE TABLE IF NOT EXISTS $TABLA_PEDIDO (
+                $COL_PEDIDO_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COL_PEDIDO_ID_MESA INTEGER NOT NULL,
+                $COL_PEDIDO_FECHA TEXT NOT NULL,
+                $COL_PEDIDO_ESTADO TEXT NOT NULL DEFAULT 'ABIERTO',
+                $COL_PEDIDO_TOTAL REAL DEFAULT 0.0,
+                FOREIGN KEY ($COL_PEDIDO_ID_MESA) REFERENCES $TABLA_MESA($COL_MESA_ID)
+            )
+        """.trimIndent()
+        db.execSQL(sqlPedido)
+
+        val sqlDetalle = """
+            CREATE TABLE IF NOT EXISTS $TABLA_DETALLE (
+                $COL_DETALLE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COL_DETALLE_ID_PEDIDO INTEGER NOT NULL,
+                $COL_DETALLE_ID_PLATO INTEGER NOT NULL,
+                $COL_DETALLE_CANTIDAD INTEGER NOT NULL CHECK($COL_DETALLE_CANTIDAD > 0),
+                $COL_DETALLE_PRECIO_UNIT REAL NOT NULL,
+                $COL_DETALLE_SUBTOTAL REAL NOT NULL,
+                FOREIGN KEY ($COL_DETALLE_ID_PEDIDO) REFERENCES $TABLA_PEDIDO($COL_PEDIDO_ID) ON DELETE CASCADE,
+                FOREIGN KEY ($COL_DETALLE_ID_PLATO) REFERENCES $TABLA_PLATO($COL_PLATO_ID)
+            )
+        """.trimIndent()
+        db.execSQL(sqlDetalle)
     }
 
     /**

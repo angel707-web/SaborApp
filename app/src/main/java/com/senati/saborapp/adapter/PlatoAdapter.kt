@@ -9,7 +9,8 @@ import com.senati.saborapp.databinding.ItemPlatoBinding
 import com.senati.saborapp.model.Plato
 
 class PlatoAdapter(
-    private var lista: List<Plato> = emptyList()
+    private var lista: List<Plato> = emptyList(),
+    private val onItemClick: ((Plato) -> Unit)? = null
 ) : RecyclerView.Adapter<PlatoAdapter.PlatoViewHolder>() {
 
     fun submitList(nuevaLista: List<Plato>) {
@@ -43,6 +44,10 @@ class PlatoAdapter(
             } else {
                 binding.tvDisponiblePlato.text = context.getString(R.string.estado_no_disponible)
                 binding.tvDisponiblePlato.setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+            }
+
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(plato)
             }
         }
     }
